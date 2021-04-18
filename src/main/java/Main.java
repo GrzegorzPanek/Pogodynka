@@ -1,14 +1,19 @@
 import pogodynka.interaction.DatabaseMethods;
 import pogodynka.interaction.User;
-import pogodynka.model.Location;
 import web_reply.OpenForecast;
 import web_reply.OpenLocation;
 
-import java.time.LocalDate;
+import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.logging.Level;
 
 public class Main {
     public static void main(String[] args) throws Exception {
+
+        @SuppressWarnings("unused")
+        org.jboss.logging.Logger logger = org.jboss.logging.Logger.getLogger("org.hibernate");
+        java.util.logging.Logger.getLogger("org.hibernate").setLevel(java.util.logging.Level.WARNING); //or whatever level you need
+
 
         OpenLocation openLocation = new OpenLocation();
         OpenForecast forecast = new OpenForecast();
@@ -29,14 +34,20 @@ public class Main {
             user.log("[5] Zamknij aplikację.");
             grubaKrecha();
 
-            selected = scanner.nextInt();
+                try {
+                    selected = scanner.nextInt();
+                } catch (Exception e) {
+                    System.out.println("Wprowadzono niepoprawny format danych.\nAplikacja zostanie zamknięta");
+                    System.exit(0);
+                }
+
             if (selected == 0 || selected == 1 || selected == 2 || selected == 3 || selected == 4 || selected == 5) {
                 switch (selected) {
                     case 1:
                         try {
                             methods.insertOneLocation(openLocation);
                         } catch (Exception e) {
-                            System.out.println("To miasto już zostało zapisane w bazie danych.");
+                            System.out.println("Wprowadzono niepoprawne dane lub miasto już zostało zapisane w bazie danych.");
                         }
                         grubaKrecha();
                         break;
