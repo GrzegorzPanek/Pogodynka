@@ -1,3 +1,3 @@
-__#Pogodynka__
+# __Pogodynka__
 
-Application to display the current weather results, downloaded from the OpenWeatherApi.
+Console application to display the current weather results, downloaded from the OpenWeatherApi.
